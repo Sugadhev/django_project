@@ -1,0 +1,21 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+     
+    {% block content %}
+<div class="container-fluid" style="margin-top: 50px;">
+    <div class="col-md-offset-4 col-md-4">
+        <h2 class="text-primary page-header text-center"><i class="fa fa-users" style="color: #fd5e14;">Registration</i></h2>
+        <div style="position: relative;">
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input class="btn" type="submit" style="color: white; background-color: #fd5e14;" id="body-link-row" value="Register">
+        </form>
+        </div>
+    </div>
+</div>
+         
+{% endblock %}

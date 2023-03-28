@@ -1,0 +1,91 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <div class="container">
+            <div class="row g-0">
+                <div class="col-sm-6 col-md-8" id="header-text">
+                  <h1 id="header-h1" style="color:#fd5e14;">Medical Store</h1>
+                </div>
+               <style>
+                th{
+                  text-align: center;
+                }
+                .center{
+                  text-align: center;
+                }
+               </style> 
+               <div class="col-md-6 pull-right">
+                   <table class="table">
+                    <tr>
+                        <th><input type="text" name="search" id="search" placeholder="Search" class="form-control"></th>
+                    </tr>
+                   </table>
+               </div>
+
+                <div class="col-6 col-md-4" id="header-image"><img src="images/in-liquid-slide-2.svg " alt=""></div>
+                
+          <!-- its for the insert -->
+            <div class="container-fluid" style="margin-top: 50px;">
+              <div class="col-md-offset-3 col-md-6">
+                <a class="btn" style="color: white; background-color: #fd5e14;  "href="insert/" id="body-link-row">Insert</a>
+                {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'error'%}
+                               <div class="alert alert-danger">
+                                   {{ message }}
+                               </div>
+                            {% else %}
+                               <div class="alert alert-{{ message.tags}}">
+                                   {{ message }}
+                               </div> 
+                            {% endif %}
+                          {% endfor %}
+                     {% endif %}             
+              </div>
+            </div>
+           <!-- for table -->
+        <table class="table table-bordered">
+          <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Location</th>
+                <th>Medicinename</th>
+                <th>Medicinecategory</th>
+                <th>Symptoms</th>
+                <th>Update</th>
+                <th>Delete</th>
+              </tr>
+          </thead>
+          {% for mydata in data %}
+          <tbody id="mytable">
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{mydata.location}}</td>
+              <td>{{mydata.medicinename}}</td>
+              <td>{{mydata.medicinecategory}}</td>
+              <td>{{mydata.symptoms}}</td>
+              <td class="center"><a class="btn btn-primary" href="update/{{mydata.id}}">Update</a></td>
+              <td class="center"><a class="btn btn-danger" href="delete/{{mydata.id}}">Delete</a></td>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>     
+      </div>
+    </div>
+
+    <script>
+      $("document").ready(function(){
+          $('#search').keyup(function(){
+              var value=$(this).val().toLowerCase()
+              $("#mytable tr").filter(function(){
+                  $(this).toggle($(this).text().toLowerCase().indexOf(value)>-1);
+              });
+          });
+      });
+   </script>
+
+{% endblock content %}
+
+
+   
